@@ -5,6 +5,8 @@ import (
 	"flag"
 	pb "github.com/go-programming-tour-book/grpc-demo/proto"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/metadata"
+	"log"
 	"net"
 	"strconv"
 )
@@ -36,6 +38,9 @@ func (s *GreeterServer) SayList(req *pb.HelloRequest, stream pb.Greeter_SayListS
 
 // 一元RPC
 func (s *GreeterServer) SayHello(ctx context.Context, req *pb.HelloRequest) (*pb.HelloReply, error) {
+	if md, ok := metadata.FromIncomingContext(ctx); ok {
+		log.Printf("md: %+v", md)
+	}
 	return &pb.HelloReply{
 		Message: req.Name,
 	}, nil

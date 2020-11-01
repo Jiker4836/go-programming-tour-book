@@ -1,13 +1,27 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/go-programming-tour-book/blog-service/internal/routers"
+	"net/http"
+	"time"
+)
 
 func main() {
-	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
-	r.Run()
+	router := routers.NewRouter()
+	s := &http.Server{
+		Addr:              ":8080",
+		Handler:           router,
+		TLSConfig:         nil,
+		ReadTimeout:       10 * time.Second,
+		ReadHeaderTimeout: 0,
+		WriteTimeout:      10 * time.Second,
+		IdleTimeout:       0,
+		MaxHeaderBytes:    1 << 20,
+		TLSNextProto:      nil,
+		ConnState:         nil,
+		ErrorLog:          nil,
+		BaseContext:       nil,
+		ConnContext:       nil,
+	}
+	s.ListenAndServe()
 }

@@ -4,6 +4,7 @@ import (
 	"context"
 	pb "github.com/go-programming-tour-book/grpc-demo/proto"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/metadata"
 	"log"
 )
 
@@ -25,7 +26,9 @@ func main() {
 }
 
 func SayHello(client pb.GreeterClient) error {
-	resp, err := client.SayHello(context.Background(), &pb.HelloRequest{
+	ctx := context.Background()
+	newCtx := metadata.AppendToOutgoingContext(ctx, "go", "Go编程之旅")
+	resp, err := client.SayHello(newCtx, &pb.HelloRequest{
 		Name: "test",
 	})
 	if err != nil {

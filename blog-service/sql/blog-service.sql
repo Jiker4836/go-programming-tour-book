@@ -2,7 +2,8 @@ CREATE DATABASE
 IF
 	NOT EXISTS blog_service DEFAULT CHARACTER
 	SET utf8mb4 DEFAULT COLLATE utf8mb4_general_ci;
-	
+
+use blog_service;
 -- 标签表
 
 DROP table if exists `blog_tag`;
